@@ -33,7 +33,7 @@ public class Client {
 				}
 				socket.close();
 			} catch (IOException e) {
-				System.out.println("Close client connection!");
+				System.out.println("[CLIENT SYSTEM MESSAGE] Close client connection!");
 			}
 		});
 		thread.setDaemon(true);

@@ -26,7 +26,7 @@ public class Handler {
 				}
 				clientSocket.close();
 			} catch(IOException e) {
-				System.out.println("[handler]: Client disconnected!");
+				System.out.println("Client connection was broke!");
 			}
 		}); 
 		thread.start();
@@ -35,9 +35,10 @@ public class Handler {
 	private void processConection() throws IOException {
 		String message = dis.readUTF();
 		if(message.equals("exit")) {
+			dos.writeUTF("[SERVER SYSTEM MESSAGE]: Client disconnected!");
 			closeConnection();
 		} else {
-			dos.writeUTF(message);
+			dos.writeUTF("[SERVER ECHO]: " + message);
 		}
 	}
 	
