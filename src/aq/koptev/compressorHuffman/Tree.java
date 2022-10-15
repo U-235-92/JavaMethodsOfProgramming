@@ -1,7 +1,5 @@
 package aq.koptev.compressorHuffman;
 
-import java.util.Comparator;
-
 public class Tree implements Comparable<Tree> {
 	
 	private Node root;
@@ -17,15 +15,6 @@ public class Tree implements Comparable<Tree> {
 	}
 	
 	public void add(Node node1, Node node2) {
-//		if(root.getLeftChild() == null && root.getRightChild() == null) {
-//			if(node1.getFrequensy() > node2.getFrequensy()) {
-//				root.setLeftChild(node2);
-//				root.setRightChild(node1);
-//			} else {
-//				root.setLeftChild(node1);
-//				root.setRightChild(node2);
-//			}
-//		} 
 		if(node1.getFrequensy() > node2.getFrequensy()) {
 			root.setLeftChild(node2);
 			root.setRightChild(node1);

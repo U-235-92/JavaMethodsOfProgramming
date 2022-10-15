@@ -8,19 +8,22 @@ import java.util.Map;
 
 public class Compressor {
 	
+	private Map<String, Integer> frequensySymbolMap;
+	private List<Node> nodeList;
 	private Map<String, String> codeMap = new HashMap<>();
 	private Tree huffmanTree;
+	private String encodeText = "";
+	private String decodeTet = "";
+	private String origText = "";
 	
-	public void compress(String text) {
-		Map<String, Integer> frequensySymbolMap = frequensySymbolMap(text);
-		List<Node> nodeList = getTreeQueue(frequensySymbolMap);
+	public final void compress(String text) {
+		origText = text;
+		frequensySymbolMap = frequensySymbolMap(text);
+		nodeList = getNodeList(frequensySymbolMap);
 		huffmanTree = getHuffmanTree(nodeList);
 		fillCodeMap();
-		String encodeText = getEncodeText(text);
-		String decodeTet = getDecodeString(encodeText);
-		println(text);
-		println(encodeText);
-		println(decodeTet);
+		encodeText = getEncodeText(text);
+		decodeTet = getDecodeString(encodeText);
 	}
 	
 	private Map<String, Integer> frequensySymbolMap(String text) {
@@ -37,7 +40,7 @@ public class Compressor {
 		return frequensySymbolMap;
 	}
 	
-	private List<Node> getTreeQueue(Map<String, Integer> frequensySymbolMap) {
+	private List<Node> getNodeList(Map<String, Integer> frequensySymbolMap) {
 		List<Node> nodeList = new ArrayList<>();
 		for(Map.Entry<String, Integer> entry : frequensySymbolMap.entrySet()) {
 			Node node = new Node(entry.getValue(), entry.getKey());
@@ -67,7 +70,7 @@ public class Compressor {
 	
 	private void fillCodeMap0(Node node, String path) {
 		if(node != null) {
-			if(node.getLeftChild() == null && node.getRightChild() == null) {
+			if(isLeaf(node)) {
 				codeMap.put(node.getValue(), path);
 			}
 			fillCodeMap0(node.getLeftChild(), path + 0);
@@ -104,7 +107,7 @@ public class Compressor {
 	private String decode0(Node node, int index, char[] path) {
 		String result = "";
 		if(node != null) {
-			if(node.getLeftChild() == null && node.getRightChild() == null) {
+			if(isLeaf(node)) {
 				result += node.getValue();
 				if(index > path.length - 1) {
 					return result;
@@ -119,6 +122,22 @@ public class Compressor {
 			}
 		}
 		return result;
+	}
+	
+	private boolean isLeaf(Node node) {
+		return node.getLeftChild() == null && node.getRightChild() == null;
+	}
+	
+	public void printEncode() {
+		println(encodeText);
+	}
+	
+	public void printDecode() {
+		println(decodeTet);
+	}
+	
+	public void printOrigText() {
+		println(origText);
 	}
 	
 	private void println(String text) {
